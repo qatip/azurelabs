@@ -57,9 +57,6 @@ Specific prerequisites may vary depending on the course module or lab.
 ---
 
 ## Usage Guidelines
-This version of the course is hosted on the QA Platform
-An older version, hosted on Skillable is temporarily available at https://github.com/qatip/azurelabs-skillable.git
-
 When working through the labs:
 
 • Follow the **lab guide instructions carefully**  
