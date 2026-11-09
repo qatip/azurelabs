@@ -14,8 +14,8 @@ variable "resource_groups" {
   description = "Map of resource group names to their locations"
   type        = map(string)
   default = {
-    "rg-demo-1" = "East US"
-    "rg-demo-2" = "West Europe"
-    "rg-demo-3" = "Central US"
+    "rg-test" = "East US"
+    "rg-dem" = "West Europe"
+    "rg-deo" = "Central US"
   }
 }

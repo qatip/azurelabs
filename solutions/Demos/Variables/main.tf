@@ -9,14 +9,14 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id = "<sub here>"
+  subscription_id = "{sub}"
 }
 
 # Resource Group
 resource "azurerm_resource_group" "example" {
   # hard coded - not great !
   #name     = "RG1"
-  #ocation = "East US"
+  #location = "East US"
   # variables - better :-)
   name     = var.resource_group_name
   location = var.location

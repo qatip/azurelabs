@@ -2,7 +2,7 @@ terraform {
   required_providers {
     docker = {
       source  = "kreuzwerker/docker"
-      version = "3.6.2"
+      version = "4.2.0"
     }
   }
 }
@@ -22,7 +22,7 @@ resource "docker_container" "webserver" {
   name  = "webserver"
   ports {
     internal = 80
-    external = 88
+    external = 8080
   }
 }
 

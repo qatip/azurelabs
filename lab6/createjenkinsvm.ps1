@@ -1,8 +1,8 @@
 # Variables
-$ResourceGroupName = "jenkins-{suffix}"
-$Location = "westeurope"
+$ResourceGroupName = "jenkins-245928"
+$Location = "denmarkeast"
 $VMName = "VM1"
-$Image = "Ubuntu2404"
+$Image = "Canonical:ubuntu-24_04-lts:server:latest"
 $VMSize = "Standard_B2S"
 $AdminUsername = "azureuser"
 #$Tags = @{

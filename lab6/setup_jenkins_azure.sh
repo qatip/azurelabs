@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e  # Exit if any command fails
 
-JENKINS_VERSION="2.541.1"  # Change this to the version you need
+JENKINS_VERSION="2.580.1"  # Change this to the version you need
 
 sudo apt-get update -y
 sudo apt-get upgrade -y
