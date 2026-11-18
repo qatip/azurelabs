@@ -1,6 +1,5 @@
 ## Task 1
-# We strongly recommend using the required_providers block to set the
-# Azure Provider source and version being used
+
 terraform {
   required_providers {
     azurerm = {
@@ -20,7 +19,8 @@ provider "azurerm" {
 # Create a resource group
 resource "azurerm_resource_group" "example" {
   name     = "rg3-{suffix}"
-  location = "West Europe"
+  location = "Denmark East"
+#  location = "West Europe"
 }
 
 # Create a virtual network within the resource group
@@ -40,7 +40,7 @@ resource "azurerm_subnet" "example" {
 
 ## Task 2
 resource "azurerm_route_table" "example" {
-  name                = "example-route-table"
+  name                = "lab3-route-table"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 

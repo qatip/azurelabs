@@ -1,6 +1,10 @@
-# QATIPv3 Azure Lab3
+# QATIP Azure Lab3
 
 ## VNet deployment using Terraform
+
+Last reviewed and tested - 18/11/26 22:01 - mcgreen@qa.com
+
+PDF version deprecated and removed due to copy/paste issues.
 
 ## Contents
 
@@ -70,11 +74,11 @@ Searching the Registry for guidance….
 
 1. Add and configure an azurerm provider block into main.tf using version 4.16.0 and referencing your lab subscription.
 
-2. Create an azurerm_resource_group resource group named rg3-{suffix}. Specify West Europe as the location.
+2. Create an azurerm_resource_group resource group named rg3-{suffix}. Specify `Denmark East` as the location. Use `West Europe` or `North Europe` as alternative locations if necessary.
 
-3. Create an example azurerm_virtual_network resource within the resource group. Do not provision inline subnets or DNS Servers. Use a 10.0.0.0/16 address space and reference the name and location of the azurerm_resource_group you created in step 2.
+3. Create an example azurerm_virtual_network resource within the resource group. Do not provision inline subnets or DNS Servers. Use a `10.0.0.0/16` address space and reference the name and location of the `azurerm_resource_group` you created in step 2.
 
-4. Create a single example azurerm_subnet within the virtual network. Delegation is not required. Use a 10.0.1.0/24 address space and reference the azurerm_resource_group and azurerm_virtual_network resources created in steps 2 and 3.
+4. Create a single example `azurerm_subnet` within the virtual network. Delegation is not required. Use a `10.0.1.0/24` address space and reference the `azurerm_resource_group` and `azurerm_virtual_network` resources created in steps 2 and 3.
 
 5. Deploy these resources and validate their creation through the Azure Portal
 
@@ -86,7 +90,7 @@ Searching the Registry for guidance….
 
 3. Change the version value to 4.16.0
 
-4. Remove the resource_provider_registrations line
+4. Remove the `resource_provider_registrations` line
 
 5. Add the following line under ‘features {}’, replacing ‘your subscription id here’ with your Azure lab subscription id..
 
@@ -94,9 +98,11 @@ Searching the Registry for guidance….
 subscription_id = "your subscription id here"
 ```
 
-6. Change the name of the resource group to rg3-{suffix}
+6. Change the name of the resource group to rg3-{suffix} and the location to `Denmark East`
 
-7. Note how the azurerm_virtual_network resource block has implicit dependency on the azurerm_resource_group..
+`NOTE` At time of last testing, a policy was preventing the creation of resources in Denmark East. If this problem is still present when attempting an apply, then reset the location of the Resource group back to `West Europe` and try again.
+
+7. Note how the `azurerm_virtual_network` resource block has implicit dependency on the `azurerm_resource_group`..
 
 ```hcl
 resource_group_name = azurerm_resource_group.example.name
@@ -105,20 +111,20 @@ location = azurerm_resource_group.example.location
 
 8. We will now add a subnet to the network. Open the Terraform Registry Resources link [here](https://registry.terraform.io/providers/hashicorp/azurerm/4.16.0/docs/resources/subnet)
 
-9. Scroll down to the ‘Example Usage’ section and copy just the ‘azurerm_subnet’ example block into main.tf, below your existing Task1 code.
+9. Scroll down to the `Example Usage` section and copy just the `azurerm_subnet` example block into main.tf, below your existing Task1 code.
 
-10. Note how the new resource has implicit dependencies on both the azurerm_resource_group and azurerm_virtual_network...
+10. Note how the new resource has implicit dependencies on both the `azurerm_resource_group` and `azurerm_virtual_network`...
 
 ```hcl
 resource_group_name  = azurerm_resource_group.example.name
 virtual_network_name = azurerm_virtual_network.example.name
 ```
 
-11. Delete the entire delegation sub-block
+11. Delete the entire `delegation` sub-block
 
-12. Initialize terraform with terraform init
+12. Initialize terraform with `terraform init`
 
-13. Deploy these resources using terraform plan followed by terraform apply. Enter yes when prompted.
+13. Deploy these resources using `terraform plan` followed by `terraform apply`. Enter `yes` when prompted.
 
 14. Switch to the Azure Portal. Verify the creation of your resource group, the vnet with a single subnet.
 
@@ -126,9 +132,9 @@ virtual_network_name = azurerm_virtual_network.example.name
 
 ### Try it yourself
 
-1. Create an azurerm_route_table resource. Reference it to your azurerm_resource_group name and location. Configure local routing for all 10.0.1.0/16 destinations and the Internet for all others.
+1. Create an `azurerm_route_table` resource. Name the route table `lab3-route-table` and reference it to your `azurerm_resource_group` name and location. Configure local routing for all `10.0.1.0/16` destinations and the Internet for all others.
 
-2. Create an azurerm_subnet_route_table_association resource. Associate it with the azurerm_subnet and azurerm_route_table resources you created in Task 1.
+2. Create an `azurerm_subnet_route_table_association` resource. Associate it with the `azurerm_subnet` and `azurerm_route_table` resources you created in Task 1.
 
 3. Deploy these resources and validate their creation through the Azure Portal
 
@@ -136,20 +142,20 @@ virtual_network_name = azurerm_virtual_network.example.name
 
 1. Open Terraform Registry Resources link [here](https://registry.terraform.io/providers/hashicorp/azurerm/4.16.0/docs/resources/route_table)
 
-2. Familiarize yourself and then copy the azurerm_route_table example block into the Task2 section of main.tf excluding the resource group resource block.
+2. Familiarize yourself and then copy the `azurerm_route_table` example block into the Task2 section of main.tf excluding the `resource group` resource block.
 
-3. Note how the new resource has implicit dependencies on azurerm_resource_group...
+3. Note how the new resource has implicit dependencies on `azurerm_resource_group`...
 
 ```hcl
 location = azurerm_resource_group.example.location
 resource_group_name  = azurerm_resource_group.example.name
 ```
 
-4. Change the address_prefix to “10.0.0.0/16” so that is aligns to the vnet address space defines in Task 1.
+4. Change the name to `lab3-route-table` (a policy requirement) and the `address_prefix` to `10.0.0.0/16` so that is aligns to the vnet address space defines in Task 1.
 
-5. Remove the tags sub-block
+5. Remove the `tags` sub-block
 
-6. Add a second route block to add a default route to the internet…
+6. Add a second `route` block to add a default route to the internet…
 
 ```hcl
 route {
@@ -161,16 +167,16 @@ route {
 
 7. We now need to associate our subnet with the route table. Open Terraform Registry Resources link [here](https://registry.terraform.io/providers/hashicorp/azurerm/4.16.0/docs/resources/subnet_route_table_association)
 
-8. Copy the last resource block example, ‘azurerm_subnet_route_table_association’, into the bottom of the Task 2 block of main.tf
+8. Copy the last resource block example, `azurerm_subnet_route_table_association`, into the bottom of the Task 2 block of main.tf
 
-9. Note how the new resource has implicit dependencies on azurerm_subnet and azurerm_route_table...
+9. Note how the new resource has implicit dependencies on `azurerm_subnet` and `azurerm_route_table`...
 
 ```hcl
 subnet_id = azurerm_subnet.example.id
 route_table_id = azurerm_route_table.example.id
 ```
 
-10. Deploy these resources using terraform plan followed by terraform apply
+10. Deploy these resources using `terraform plan` followed by `terraform apply` confirming with `yes`
 
 11. Switch to the Azure Portal. Verify the creation of 2 additional resources within your resource group.
 
@@ -178,11 +184,9 @@ route_table_id = azurerm_route_table.example.id
 
 ### Try it yourself
 
-1. Create an azurerm_network_security_group resource.  Reference it to your resource group name and location. Configure the security rule to permit inbound traffic from the internet trying to reach any destination on TCP port
+1. Create an `azurerm_network_security_group` resource.  Reference it to your resource group name and location. Configure the security rule to permit inbound traffic from the internet trying to reach any destination on TCP port 3389.
 
-3389.
-
-2. Associate this NSG with your Vnet subnet using an azurerm_subnet_network_security_group_association resource.
+2. Associate this NSG with your Vnet subnet using an `azurerm_subnet_network_security_group_association` resource.
 
 3. Deploy these resources and validate their creation through the Azure Portal.
 
@@ -190,33 +194,33 @@ route_table_id = azurerm_route_table.example.id
 
 1. Open Terraform Registry Resources link [here](https://registry.terraform.io/providers/hashicorp/azurerm/4.16.0/docs/resources/network_security_group)
 
-2. Familiarize yourself and then copy the azurerm_network_security_group example block into Task3 section of main.tf
+2. Familiarize yourself and then copy the `azurerm_network_security_group` example block into Task3 section of main.tf
 
-3. Note how the new resource has implicit dependencies on azurerm_resource_group...
+3. Note how the new resource has implicit dependencies on `azurerm_resource_group`...
 
 ```hcl
 location = azurerm_resource_group.example.location
 resource_group_name  = azurerm_resource_group.example.name
 ```
 
-4. Change the destination_port_range to “3389”
+4. Change the destination_port_range to `3389`
 
-5. Change the source_address_prefix to “Internet”
+5. Change the source_address_prefix to `Internet`
 
-6. Remove the tags sub-block
+6. Remove the `tags` sub-block
 
 7. We must now associate this security group with our subnet. Open Terraform Registry Resources link [here](https://registry.terraform.io/providers/hashicorp/azurerm/4.16.0/docs/resources/subnet_network_security_group_association)
 
-8. Familiarize yourself and then copy the ‘azurerm_subnet_network_security_group_association’ sample block into the bottom of the Task 3 block in main.tf
+8. Familiarize yourself and then copy the `azurerm_subnet_network_security_group_association` sample block into the bottom of the Task 3 block in main.tf
 
-9. Note how the new resource has implicit dependencies on azurerm_subnet and azurerm_network_security_group...
+9. Note how the new resource has implicit dependencies on `azurerm_subnet` and `azurerm_network_security_group`...
 
 ```hcl
 subnet_id = azurerm_subnet.example.id
 network_security_group_id = azurerm_network_security_group.example.id
 ```
 
-10. Deploy these 2 new resources using terraform apply followed by yes
+10. Deploy these 2 new resources using `terraform apply` followed by `yes`
 
 11. Switch to the Azure Portal. Click into your security group to verify the security rule and subnet association are created… The warning icon is highlighting the fact that a rule allows inbound traffic from any external IP. In production you would create more restrictive rules.
 
@@ -228,15 +232,15 @@ network_security_group_id = azurerm_network_security_group.example.id
 
 3. Note. Address any resource reference errors if your resource identifiers do not match those expected.
 
-4. Deploy these 3 new resources using terraform apply
+4. Deploy these 3 new resources using `terraform apply` followed by `yes`
 
-5. Note. If you receive errors regarding the machine size being used (“Standard_B2s”) then try "Standard_D2s_V3", "Standard_DS2_V2" or "Standard_DS3_v2".
+5. Note. If you receive errors regarding the machine size being used (`Standard_B2s_v2`) then try `Standard_B2s`.
 
 ## Task 5. Testing
 
 1. Return to the Azure Portal
 
-2. Review the list of resources in your resource group and then click on virtual machine vm3
+2. Review the list of resources in your resource group and then click on virtual machine `vm3`
 
 3. From the top menu click Connect > Connect > Download RDP
 
@@ -250,7 +254,7 @@ network_security_group_id = azurerm_network_security_group.example.id
 
 ## Task 6. Lab Clean-up
 
-1. Run terraform destroy and confirm with yes when prompted.
+1. Run `terraform destroy` and confirm with `yes` when prompted.
 
 **Congratulations, you have completed this lab**
 
