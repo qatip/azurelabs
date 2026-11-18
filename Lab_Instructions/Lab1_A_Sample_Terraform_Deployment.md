@@ -177,7 +177,7 @@ docker images
 
 The image listed is the httpd image that Terraform instructed Docker to download
 
-7. Run `docker ps` to list running containers..
+8. Run `docker ps` to list running containers..
 
 ```powershell
 docker ps
@@ -185,13 +185,13 @@ docker ps
 
 This is the container named ‘webserver’, that Terraform instructed Docker to start, using the downloaded image. Note the last few digits of the unique container ID for your running container.
 
-8. Access the container via this link [http://127.0.0.1:88](http://127.0.0.1:88/)
+9. Access the container via this link [http://127.0.0.1:88](http://127.0.0.1:88/)
 
-9. View the “It Works" response from the Apache web server (index.html)
+10. View the “It Works" response from the Apache web server (index.html)
 
-10. We will now modify the deployment by changing the external port number from 88 to 8088. Some resource changes can be applied to the existing instance of a resource, whilst others require the destruction of the original resource and the creation of a replacement. Let us see whether a port change modifies or recreates this resource.
+11. We will now modify the deployment by changing the external port number from 88 to 8088. Some resource changes can be applied to the existing instance of a resource, whilst others require the destruction of the original resource and the creation of a replacement. Let us see whether a port change modifies or recreates this resource.
 
-11. Return to the `main.tf` file. Change the external port on line 25 from 88 to 8088.
+12. Return to the `main.tf` file. Change the external port on line 25 from 88 to 8088.
 
 ```hcl
 ports {
@@ -200,9 +200,9 @@ ports {
 }
 ```
 
-12. If you have not enabled Auto save, save the file changes using Ctrl+s
+13. If you have not enabled Auto save, save the file changes using Ctrl+s
 
-13. Run `terraform plan` again and review the changes. The change of port will force the current container to be deleted and a new one created…
+14. Run `terraform plan` again and review the changes. The change of port will force the current container to be deleted and a new one created…
 
 ```text
 ~ ports {
@@ -213,11 +213,11 @@ ports {
 Plan: 1 to add, 0 to change, 1 to destroy.
 ```
 
-14. Run `terraform apply`, typing `yes` when prompted
+15. Run `terraform apply`, typing `yes` when prompted
 
-15. Browse to http://127.0.0.1:8088 This should return a success "It works" showing that the new container is listening on port 8088
+16. Browse to http://127.0.0.1:8088 This should return a success "It works" showing that the new container is listening on port 8088
 
-16. Run `docker ps` again
+17. Run `docker ps` again
 
 Note that your CONTAINER ID will have changed – Docker containers are immutable so Terraform destroyed the original container and deployed a replacement using the same image. This is an important point to be aware of as we progress through the course. Whether we ‘update’ or ‘replace’ a resource when making changes depends upon the resource itself and the changes we make.
 
