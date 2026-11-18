@@ -5,7 +5,8 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "example" {
   name     = "rg2-{Suffix}"
-  location = "West Europe"
+  location = "Denmark East"
+#  location = "West Europe"
 }
 
 resource "azurerm_virtual_network" "example" {
@@ -38,7 +39,7 @@ resource "azurerm_windows_virtual_machine" "example" {
   name                = "VM1"
   resource_group_name = azurerm_resource_group.example.name
   location            = azurerm_resource_group.example.location
-  size                = "Standard_B2s"
+  size                = "Standard_B2s_v2"
   admin_username      = "adminuser"
   admin_password      = "P@$$w0rd1234!"
   network_interface_ids = [
