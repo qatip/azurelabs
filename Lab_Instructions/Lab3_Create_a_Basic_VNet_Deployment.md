@@ -74,7 +74,7 @@ Searching the Registry for guidance….
 
 1. Add and configure an azurerm provider block into main.tf using version 4.16.0 and referencing your lab subscription.
 
-2. Create an azurerm_resource_group resource group named rg3-{suffix}. Specify `Denmark East` as the location. Use `West Europe` or `North Europe` as alternative locations if necessary.
+2. Create an azurerm_resource_group resource group named `rg3-{suffix}` replacing {suffix} with your suffix. Specify `Denmark East` as the location. Use `West Europe` or `North Europe` as alternative locations if necessary.
 
 3. Create an example azurerm_virtual_network resource within the resource group. Do not provision inline subnets or DNS Servers. Use a `10.0.0.0/16` address space and reference the name and location of the `azurerm_resource_group` you created in step 2.
 
