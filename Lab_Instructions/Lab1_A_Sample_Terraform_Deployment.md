@@ -169,7 +169,7 @@ terraform apply
 
 6. Switch to Docker Desktop and verify the image download and container creation.
 
-7. Switch back to the IDE terminal and run `docker images`..
+7. Switch back to the VSC terminal and run `docker images`..
 
 ```powershell
 docker images
