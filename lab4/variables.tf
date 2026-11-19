@@ -7,6 +7,6 @@
 #variable "location" {
 #  description = "The Azure region to deploy the Resource Group"
 #  type        = string
-#  default     = "North Europe"
+#  default     = "westus"
 #}
 

@@ -2,7 +2,7 @@
 
 ## Terraform variables and workspaces
 
-Last reviewed and tested - 19/11/26 03:18 - mcgreen@qa.com
+Last reviewed and tested - 19/11/26 05:03 - mcgreen@qa.com
 
 PDF version deprecated and removed due to copy/paste issues.
 
@@ -65,13 +65,13 @@ There is no solution code for this lab as it involves multiple deployment phases
 ```hcl
 resource "azurerm_resource_group" "example" {
   name     = "rg4-mf2fb5-default"
-  location = "North Europe"
+  location = "westus"
 }
 ```
 
 3. Review the updated `main.tf` file.
 
-There is a hard coded definition of a resource group in North Europe. This represents the resources we are to create, in this case just an empty resource group. In production there would be many other resources defined here. There is also an output block which displays the current workspace.
+There is a hard coded definition of a resource group in West US. This represents the resources we are to create, in this case just an empty resource group. In production there would be many other resources defined here. There is also an output block which displays the current workspace.
 
 ## Task2 - Run terraform plan and apply with hardcoded parameter values
 
@@ -91,7 +91,7 @@ cd c:\azurelabs\lab4
 
 6. Run `terraform apply` followed by `yes` when prompted
 
-7. Switch to the Azure portal and verify the creation of your resource group in North Europe. Others will also exist.
+7. Switch to the Azure portal and verify the creation of your resource group in West US. Others will also exist.
 
 8. Examine the newly created state file in the root folder.
 
@@ -101,7 +101,7 @@ cd c:\azurelabs\lab4
 
 1. In `main.tf`; Replace hard-code resource group name with `var.resource_group_name` (no quotes)
 
-2. Replace hard-coded location `North Europe` with `var.location`
+2. Replace hard-coded location `westus` with `var.location`
 
 ```hcl
 # Resource Group
@@ -131,27 +131,27 @@ An input variable with the name "location" has not been declared.
 1   variable "resource_group_name" {
 2     description = "The name of the Azure Resource Group"
 3     type        = string
-4     # default   = "RG-{Suffix}"
+4     # default   = "rg4-{Suffix}-default"
 5   }
 6
 7   variable "location" {
 8     description = "The Azure region to deploy the Resource Group"
 9     type        = string
-10    # default   = "North Europe"
+10    # default   = "westus"
 11  }
 ```
 
-6. Run terraform plan
+6. Run `terraform plan`
 
-7. When prompted, enter `northeurope` as the location and `rg4-{your-suffix}-default` as the resource group name, inserting your suffix.. The planning completes using the values inputted when prompted. Given that these values are the same as the old static values, the planning phase shows that there are no changes needed.
+7. When prompted, enter `westus` as the location and `rg4-{your-suffix}-default` as the resource group name, inserting your suffix.. The planning completes using the values inputted when prompted. Given that these values are the same as the old static values, the planning phase shows that there are no changes needed.
 
-8. In variables.tf; uncomment lines `4` and `10` and update line `4` with your `suffix`
+8. In `variables.tf`; uncomment lines `4` and `10` and update line `4` with your `suffix`
 
 9. Run `terraform plan`
 
 10. The planning completes using the values drawn from the variables file. Given that these values are the same as the old static values, the planning phase again shows that there are no changes needed.
 
-11. In 'variables.tf'; append a random digit to your resource group name.
+11. In `variables.tf`; append a random digit to your resource group name.
 
 12. Run `terraform plan`
 
@@ -168,18 +168,18 @@ An input variable with the name "location" has not been declared.
 1. Enter the following command..
 
 ```powershell
-terraform plan -var="location=westus"
+terraform plan -var="location=centralus"
 ```
 
 Note that the proposed location supplied at the command prompt takes precedence over the default location.
 
 2. Run `terraform apply` and review the proposed actions (do not enter ‘yes’)…
 
-Note that proposed location has reverted back to the default `northeurope` because an override value was not provided at the command line when running terraform apply.
+Note that the proposed location has reverted back to the default `westus` because an override value was not provided at the command line when running terraform apply.
 
 3. Press enter, without typing yes to cancel the apply
 
-4. Run `terraform apply -var="location=westus"` and note that the apply uses the specified location.
+4. Run `terraform apply -var="location=centralus"` and note that the apply proposes to use the specified location.
 
 5. Again, press enter, without typing yes to cancel the apply
 
@@ -197,15 +197,15 @@ If using command line variables then they `must` be used consistently for both p
 
 3. In `terraform.tfvars`; uncomment the second line
 
-4. In variables.tf; comment the lines that supply the default values for the two variables.
+4. In `variables.tf`; comment the lines that supply the default values for the two variables.
 
-5. Run terraform plan
+5. Run `terraform plan`
 
 The plan is identical but now all variable values are drawn from `terraform.tfvars`. If terraform.tfvars provides a value then defining a default value when the variable is initially declared becomes redundant as `terraform.tfvars` has higher precedence.
 
 6. Run `terraform apply` followed by `yes`
 
-7. Switch to the Azure portal and verify the creation of the resource group in North Europe.
+7. Switch to the Azure portal and verify the creation of the resource group in West US.
 
 `Takeaway`: When terraform.tfvars supplies all variable values, there is no rationale for specifying default values as these will always be overridden. It is not uncommon therefore to define the variables without declaring any default values.
 
@@ -219,11 +219,11 @@ terraform workspace new prod
 terraform workspace list
 ```
 
-The * indicates your current workspace is prod.
+The * indicates your current workspace is `prod`.
 
-The default workspace always exists, and this is where your current deployment of the `test` resource group to North Europe is tracked by the statefile terraform.tfstate in the root folder.
+The default workspace always exists, and this is where your current deployment of the `test` resource group to West US is tracked by the statefile `terraform.tfstate` in the root folder.
 
-2. In EXPLORER, note the creation of a new folder `terraform.tfstate.d` with an empty subfolder for each of the new workspaces…
+2. In EXPLORER, note the creation of a new folder `terraform.tfstate.d` with an empty subfolder for each of the new workspaces.
 
 3. Update `prod.tfvars` with your suffix, thus defining a ‘prod’ resource group in UK South.
 
@@ -235,7 +235,7 @@ You are working in the `prod` workspace, and the resource group name and locatio
 
 Note that a new terraform.tfstate file is created in the prod folder to track the prod workspace deployment
 
-6. Switch to the Azure portal and verify the creation of your prod resource group in UK South... Note that your test resource group in North Europe still exists as it is a separate deployment
+6. Switch to the Azure portal and verify the creation of your `prod` resource group in West US 2. Note that your `test` resource group in West US still exists as it is a separate deployment
 
 7. Switch to the`dev` workspace..
 
@@ -243,7 +243,7 @@ Note that a new terraform.tfstate file is created in the prod folder to track th
 terraform workspace select dev
 ```
 
-8. Update `dev.tfvars` with your suffix, thus defining a ‘dev’ resource group in West Europe.
+8. Update `dev.tfvars` with your suffix, thus defining a ‘dev’ resource group in East US.
 
 9. Run `terraform plan --var-file=dev.tfvars`
 
@@ -253,7 +253,7 @@ You are working in the `dev` workspace, and the resource group name and location
 
 Note that a new terraform.tfstate file is created in the dev folder to track the dev workspace deployment
 
-11. Switch to the Azure portal and verify the creation of dev resource group in West Europe ..
+11. Switch to the Azure portal and verify the creation of `dev` resource group in East US ..
 
 Note that your previously deployed resources still exist as they are separate deployments.
 
@@ -291,7 +291,7 @@ terraform workspace select default
 terraform workspace delete prod
 ```
 
-7. Verify the deletion of the workspaces, leaving just the default workspace. This cannot be deleted..
+7. Verify the deletion of the workspaces, leaving just the `default` workspace. This cannot be deleted..
 
 ```powershell
 terraform workspace list

@@ -15,7 +15,7 @@ provider "azurerm" {
 # Resource Group
 resource "azurerm_resource_group" "example" {
   name     = "rg4-{suffix}-default"
-  location = "North Europe"
+  location = "westus"
 }
 
 output "workspace_name" {

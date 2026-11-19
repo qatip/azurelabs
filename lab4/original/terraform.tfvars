@@ -1,2 +1,2 @@
-#resource_group_name = "rg-{Suffix}-test"
-#location            = "North Europe"
+#resource_group_name = "rg4-{Suffix}-test"
+#location            = "westus"
