@@ -2,7 +2,7 @@
 
 ## VNet deployment using Terraform
 
-Last reviewed and tested - 18/11/26 22:01 - mcgreen@qa.com
+Last reviewed and tested - 19/11/26 03:45 - mcgreen@qa.com
 
 PDF version deprecated and removed due to copy/paste issues.
 
@@ -74,7 +74,7 @@ Searching the Registry for guidance….
 
 1. Add and configure an azurerm provider block into main.tf using version 4.16.0 and referencing your lab subscription.
 
-2. Create an azurerm_resource_group resource group named `rg3-{suffix}` replacing {suffix} with your suffix. Specify `Denmark East` as the location. Use `West Europe` or `North Europe` as alternative locations if necessary.
+2. Create an azurerm_resource_group resource group named `rg3-{suffix}` replacing {suffix} with your suffix. Specify `Denmark East` as the location.
 
 3. Create an example azurerm_virtual_network resource within the resource group. Do not provision inline subnets or DNS Servers. Use a `10.0.0.0/16` address space and reference the name and location of the `azurerm_resource_group` you created in step 2.
 
@@ -99,8 +99,6 @@ subscription_id = "your subscription id here"
 ```
 
 6. Change the name of the resource group to rg3-{suffix} and the location to `Denmark East`
-
-`NOTE` At time of last testing, a policy was preventing the creation of resources in Denmark East. If this problem is still present when attempting an apply, then reset the location of the Resource group back to `West Europe` and try again.
 
 7. Note how the `azurerm_virtual_network` resource block has implicit dependency on the `azurerm_resource_group`..
 
@@ -233,8 +231,6 @@ network_security_group_id = azurerm_network_security_group.example.id
 3. Note. Address any resource reference errors if your resource identifiers do not match those expected.
 
 4. Deploy these 3 new resources using `terraform apply` followed by `yes`
-
-5. Note. If you receive errors regarding the machine size being used (`Standard_B2s_v2`) then try `Standard_B2s`.
 
 ## Task 5. Testing
 

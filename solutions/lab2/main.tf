@@ -6,7 +6,6 @@ provider "azurerm" {
 resource "azurerm_resource_group" "example" {
   name     = "rg2-{Suffix}"
   location = "Denmark East"
-#  location = "West Europe"
 }
 
 resource "azurerm_virtual_network" "example" {
