@@ -1,6 +1,10 @@
-# QATIPv3 – Azure Lab6
+# QATIP – Azure Lab6
 
 ## Terraform Pipelining with Jenkins
+
+Last reviewed and tested - 19/11/26 11:45 - mcgreen@qa.com
+
+PDF version deprecated and removed due to copy/paste issues.
 
 ## Contents
 
@@ -18,7 +22,7 @@
 - [Task 8. Updating the Jenkins pipeline](#task-8-updating-the-jenkins-pipeline)
 - [Task 9. (Time permitting). Configure a Jenkins Destroy pipeline](#task-9-time-permitting-configure-a-jenkins-destroy-pipeline)
 - [Task 10. Lab cleanup](#task-10-lab-cleanup)
-- [Copyright](#copyright)
+
 
 ## Lab Objectives
 
@@ -60,7 +64,7 @@ Before you begin, ensure you have followed the lab setup instructions for Azure 
 
 ## Task1. Create a Jenkins Virtual Machine
 
-1. Update line 2 of createjenkinsvm.ps1 with your suffix.
+1. Update line 2 of `lab6\createjenkinsvm.ps1` with your suffix.
 
 2. Run the script to create an Ubuntu virtual machine onto which we will install Jenkins
 
@@ -112,8 +116,8 @@ In this task you will create an Azure storage account and blob container for lat
 | Setting | Value |
 | --- | --- |
 | Resource Group | select new… jenkins-sa-{suffix} |
-| Storage Account Name | jenkinsstate-{suffix} |
-| Region | West Europe |
+| Storage Account Name | jenkinsstate{suffix} |
+| Region | Denmark East |
 | Performance | Standard |
 | Replication | Locally-redundant storage (LRS) |
 
@@ -158,23 +162,23 @@ In this task you will create github repository to which you will upload a Jenkin
 
 ### Task 3b. Create a public repository
 
-1. Click on Create repository
+1. Click on `Create repository`
 
 2. Enter a Repository name of your choice. Ensure Public is selected and check the ‘Add a README file’ option. Then click on Create repository…
 
-3. Click on Add file, Upload file..
+3. Click on `Add file, Upload file`..
 
-4. Select the file Jenkinsfile from your C:\azurelabs\lab6 folder…
+4. Select the file `Jenkinsfile` from your C:\azurelabs\lab6 folder…
 
-5. Click on Commit changes..
+5. Click on `Commit changes`..
 
-6. Repeat the previous 2 steps to upload the main.tf file from the C:\azurelabs\lab6 folder
+6. Repeat the previous 2 steps to upload the `main.tf` file from the C:\azurelabs\lab6 folder
 
-7. The 2 files should now be listed..
+7. The 2 files should now be listed.
 
-8. Copy the URL of your repository to your clipboard..
+8. Copy the URL of your repository to your clipboard.
 
-9. Click on the file Jenkinsfile and then click on the edit icon to open the file for editing.
+9. Click on the file `Jenkinsfile` and then click on the edit icon to open the file for editing.
 
 10. On line 13, replace `<your repo url>` with your Repo URL  and then click on Commit changes twice.
 
@@ -182,7 +186,7 @@ In this task you will create github repository to which you will upload a Jenkin
 git branch: 'main', url: '<your repo url>'
 ```
 
-11. Click on main.tf and then open it for editing
+11. Click on `main.tf` and then open it for editing
 
 12. Update line 12 with your lab subscription id.
 
@@ -206,13 +210,13 @@ git branch: 'main', url: '<your repo url>'
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 
-3. Select Install suggested plugins
+3. Select `Install suggested plugins`
 
-4. On the Create First Admin User screen; Select Skip and continue as admin
+4. On the Create First Admin User screen; Select `Skip and continue as admin`
 
-5. Click Save and Finish to complete the Jenkins configuration.
+5. Click `Save and Finish` to complete the Jenkins configuration.
 
-6. Click Start using Jenkins
+6. Click `Start using Jenkins`
 
 ## Task 5. Add Azure credentials to Jenkins
 
@@ -220,7 +224,7 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 2. In the Azure portal, locate and note your Subscription ID
 
-3. At the IDE terminal, finish your SSH session by typing exit.
+3. At the IDE terminal, finish your SSH session by typing `exit`.
 
 4. This will return you to the terminal command prompt. Enter the following command to create a service principal, updating with your suffix and subscription_id…
 
@@ -228,21 +232,17 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 az ad sp create-for-rbac --name "jenkins-{suffix}" --role Contributor --scopes /subscriptions/<subscription_id>
 ```
 
-5. Details of the service principle will be displayed (your values will differ)…
+5. Details of the service principle will be displayed.
 
-6. In your Jenkins browser session; Navigate to Manage Jenkins > Credentials.
+6. In your Jenkins browser session; Navigate to `Manage Jenkins` > `Credentials`.
 
-7. On the breadcrumb menu; click on the  Credentials dropdown and then select System ...
+7. Click `Add Credentials` > `Secret text` > `Next`
 
-8. Click on “Global credentials (unrestricted)”…
+8. From your service principal output information, copy the `AppID` parameter value, excluding the quotes, and paste this into the Secret field. Enter `azure_sp_client_id` as the ID..
 
-9. Click on “Add Credentials” and select “Secret text” as the Kind..
+9. Click on Create to create this credential.
 
-10. From your service principal output information, copy the AppID parameter value, excluding the quotes, and paste this into the Secret field. Enter azure_sp_client_id as the ID..
-
-11. Click on Create to create this credential.
-
-12. Repeat steps 9 through 11 to create the following three additional credentials..
+10. Repeat step 7 to create the following three additional credentials..
 
 | Secret | ID |
 | --- | --- |
@@ -250,33 +250,32 @@ az ad sp create-for-rbac --name "jenkins-{suffix}" --role Contributor --scopes /
 | Your Service principal tenant | azure_tenant_id |
 | Your Subscription ID | azure_subscription_id |
 
-13. Ensure your credential IDs match those shown below…
 
 ## Task 6. Configure a Jenkins pipeline job
 
-1. Select  “+ New Item”  from the Jenkins dashboard
+1. Select the Jenkins logo to return to the main dashboard and then select `+ New Item`
 
-2. Enter “Terraform Pipeline” as the item name
+2. Enter `Terraform Pipeline` as the item name
 
-3. Select “Pipeline” as the item type
+3. Select `Pipeline` as the item type
 
-4. Click “OK”
+4. Click `OK`
 
-5. On the General page displayed next, scroll down to the Pipeline section. Use the dropdown list to change the Definition from “Pipeline script” to “Pipeline script from SCM”
+5. On the General page displayed next, scroll down to the `Pipeline` section. Use the dropdown list to change the Definition from “Pipeline script” to `Pipeline script from SCM`
 
-6. Select “Git” from the SCM dropdown list
+6. Select `Git` from the SCM dropdown list
 
 7. In the Repository URL: Enter your Github repository URL
 
-8. In “Branches to build,” “Branch Specifier;” change from */master to */main
+8. In `Branches to build, Branch Specifier`;” change from */master to */main
 
-9. Click “Save”
+9. Click `Save`
 
-10. Click “Build Now”
+10. Click `Build Now`
 
 ## Task 7. Verify the pipeline run and explore Jenkins
 
-1. In Jenkins, return to the Dashboard. A record of the pipeline will be displayed showing run success and failure. Refresh the page until a result of the pipeline run is displayed…
+1. In Jenkins, return to the Dashboard. A record of the pipeline will be displayed showing run success and failure. Refresh the page until a result of the pipeline run is displayed.
 
 2. Hover over and the select the drop-down menu against #1 and choose Pipeline Overview..
 
@@ -312,21 +311,21 @@ In this task we will simplify the process; you will modify the terraform files d
 
 8. Switch to your Azure portal and verify the deletion of the old resource group and the creation of a new one, refreshing the display if necessary.
 
-9. To configure automatic pipeline running; In Jenkins, re-configure the pipeline by first selecting it on the main dashboard and then choosing the “Configure” option..
+9. To configure automatic pipeline running; In Jenkins, re-configure the pipeline by first selecting it on the main dashboard and then choosing the `Configure` option..
 
-10. Scroll down to the Build Triggers section, select “Github hook trigger for GITScm polling” and click on “Save” …
+10. Scroll down to the Build Triggers section, select `Github hook trigger for GITScm polling` and click on `Save` …
 
-11. Switch to Github. Select the Settings for your repo. Scroll down and select Webhooks. Click on Add webhook (you may be prompted to re-authenticate at this point)…
+11. Switch to Github. Select the Settings for your repo. Scroll down and select `Webhooks`. Click on `Add webhook` (you may be prompted to re-authenticate at this point)…
 
-12. For Payload URL;  enter http://{IP}:8080/github-webhook/ replacing {IP} with the Public IP address of your Jenkins instance
+12. For Payload URL;  enter `http://{IP}:8080/github-webhook/` replacing {IP} with the Public IP address of your Jenkins instance
 
-13. For Content type; select application/json
+13. For Content type; select `application/json`
 
-14. Select to disable SSL verification for this lab environment.
+14. Select to `disable SSL verification` for this lab environment.
 
-15. Verify your settings as shown in example below (your IP will differ) before clicking on Add webhook..
+15. Verify your settings as outlined above before clicking on `Add webhook`..
 
-16. In main.tf change to the name of your resource group to “rg-{suffix}-test-3” and commit the changes as before.
+16. In `main.tf` change to the name of your resource group to `rg-{suffix}-test-3` and commit the changes as before.
 
 17. Re-visit your Webhooks setting and you should see confirmation that there was a successful push of the changes to Jenkins…
 
@@ -336,23 +335,23 @@ In this task we will simplify the process; you will modify the terraform files d
 
 ## Task 9. (Time permitting). Configure a Jenkins Destroy pipeline
 
-1. Select  “ + New Item”  from the Jenkins dashboard
+1. Select  ` + New Item`  from the Jenkins dashboard
 
-2. Enter “Terraform Pipeline Destroy” as the item name
+2. Enter `Terraform Pipeline Destroy` as the item name
 
-3. Select “Pipeline” as the item type
+3. Select `Pipeline` as the item type
 
-4. Click “OK”
+4. Click `OK`
 
-5. On the General page displayed next, scroll down to the Pipeline section. Use the dropdown list to change the Definition from “Pipeline script” to “Pipeline script from SCM”
+5. On the General page displayed next, scroll down to the Pipeline section. Use the dropdown list to change the Definition from “Pipeline script” to `Pipeline script from SCM`
 
-6. Select “Git” from the SCM dropdown list
+6. Select `Git` from the SCM dropdown list
 
 7. In the Repository URL: Enter your Github repository URL
 
 8. In “Branches to build,” “Branch Specifier;” change from */master to */main
 
-9. For Script path, enter destroy/Jenkinsfile …
+9. For Script path, enter `destroy/jenkinsfile` …
 
 10. Save the new pipeline but do not build it yet
 
@@ -362,21 +361,21 @@ In this task we will simplify the process; you will modify the terraform files d
 
 Note: Entering destroy/ will create the destroy folder
 
-13. Using explorer in your IDE, open Jenkinsfile in the c:\azurelabs\lab6\Jenkins\destroy folder and copy the contents into your new github file. (Ensure you select the destroy folder version!)
+13. Using explorer in your IDE, open Jenkinsfile in the c:\azurelabs\lab6\destroy folder and copy the contents into your new github file. (Ensure you select the destroy folder version!)
 
 14. Update line 13 with your repo URL and then commit the changes.
 
 15. Switch back to Jenkins and Build the pipeline.
 
-16. This Jenkinsfile mandates that approval must be granted for the deletion to proceed.  Click on the pipeline, and under Builds, select the running Terraform Pipeline Destroy job and then select Console Output..
+16. This Jenkinsfile mandates that approval must be granted for the deletion to proceed.  Click on the pipeline, and under `Builds`, select the running Terraform Pipeline Destroy job and then select Console Output..
 
-17. The run is waiting for approval to continue. Click on Yes to confirm the deletion ..
+17. The run is waiting for approval to continue. Click on `Yes` to confirm the deletion ..
 
 18. The destruction should now proceed. Switch to the Azure portal to verify the deletion of your resource group.
 
 ## Task 10. Lab cleanup
 
-1. In the Azure Portal, manually delete resource group “jenkins-sa-{suffix}” as this was created manually and is not therefore known to, nor configurable by, terraform.
+1. In the Azure Portal, manually delete resource groups `jenkins-sa-{suffix}` and `jenkins-{suffix}` as these were not created by terraform.
 
 **Congratulations, you have completed the final lab of the course.**
 
