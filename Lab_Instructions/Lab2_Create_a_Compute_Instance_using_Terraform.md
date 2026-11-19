@@ -16,7 +16,7 @@ PDF version deprecated and removed due to copy/paste issues.
 - [Task2 Deploy the resources](#task2-deploy-the-resources)
 - [Task3 Modify your deployment](#task3-modify-your-deployment)
 - [Task4 Lab Clean-up](#task4-lab-clean-up)
-- [Copyright](#copyright)
+
 
 ## Lab Objectives
 

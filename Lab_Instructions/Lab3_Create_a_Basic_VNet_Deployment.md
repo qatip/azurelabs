@@ -18,7 +18,6 @@ PDF version deprecated and removed due to copy/paste issues.
 - [Task 4. Create Virtual Machine with Virtual Nic and Public IP](#task-4-create-virtual-machine-with-virtual-nic-and-public-ip)
 - [Task 5. Testing](#task-5-testing)
 - [Task 6. Lab Clean-up](#task-6-lab-clean-up)
-- [Copyright](#copyright)
 
 ## Lab Objectives
 

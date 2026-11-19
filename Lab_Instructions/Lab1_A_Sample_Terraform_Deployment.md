@@ -15,7 +15,6 @@ PDF version deprecated and removed due to copy/paste issues.
 - [Task2 Run Terraform & Test](#task2-run-terraform--test)
 - [Task3 Examine the state file](#task3-examine-the-state-file)
 - [Task4 Destroy the deployment](#task4-destroy-the-deployment)
-- [Copyright](#copyright)
 
 ## Lab Objectives
 

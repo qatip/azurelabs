@@ -20,7 +20,7 @@ PDF version deprecated and removed due to copy/paste issues.
 - [Task6 Named tfvars and Terraform Workspaces](#task6-named-tfvars-and-terraform-workspaces)
 - [Task7 - Lab Clean-up](#task7---lab-clean-up)
 - [Terraform Workspaces in Real-World Deployments](#terraform-workspaces-in-real-world-deployments)
-- [Copyright](#copyright)
+
 
 ## Lab Objectives
 

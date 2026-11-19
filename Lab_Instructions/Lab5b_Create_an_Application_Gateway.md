@@ -17,7 +17,6 @@ PDF version deprecated and removed due to copy/paste issues.
 - [Task 2. Deploy an Application Gateway](#task-2-deploy-an-application-gateway)
 - [Task 3. Configure nic associations](#task-3-configure-nic-associations)
 - [Task4. Lab Cleanup](#task4-lab-cleanup)
-- [Copyright](#copyright)
 
 ## Lab Objectives
 
