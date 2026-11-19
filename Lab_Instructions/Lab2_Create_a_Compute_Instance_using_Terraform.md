@@ -2,7 +2,7 @@
 
 ## Creating a virtual machine with Terraform
 
-Last reviewed and tested - 18/11/26 20:26 - mcgreen@qa.com
+Last reviewed and tested - 18/11/26 03:41 - mcgreen@qa.com
 
 PDF version deprecated and removed due to copy/paste issues.
 
@@ -103,7 +103,6 @@ size                = "Standard_B2s_v2"
 
 8. Run `terraform apply` typing `yes` when prompted.
 
-`NOTE` At time of last testing, a policy was preventing the creation of resources in Denmark East. If this problem is still present, then reset the location of the Resource group back to `West Europe` and retry `terraform apply` again.
 
 9. Switch to the Azure Portal to confirm the creation of a resource group, vnet, sub-net, virtual nic and virtual machine
 
