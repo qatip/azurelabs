@@ -57,7 +57,7 @@ At the root module level, `vm.tf` contains code for the deployment of 2 virtual 
 
 2. You are not to modify any existing code as this has been change-control approved. You are to update `agw.tf` to create 2 resources; an `application gateway` and an `association` between this and the network interfaces of the 2 VMs.
 
-3. Parameters needed for the creation of these resources are within the network modules’ `outputs.tf file` and the root modules’ variables.tf file.
+3. Parameters needed for the creation of these resources are within the network modules’ `outputs.tf` file and the root modules’ `variables.tf` file.
 
 4. Successful completion of this task will be browsing to the public IP address and redirection to each of the 2 backend VMs in turn, the name of the VM being displayed in your web browser.
 
