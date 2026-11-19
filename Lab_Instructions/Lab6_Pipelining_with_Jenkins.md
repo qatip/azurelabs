@@ -287,7 +287,7 @@ az ad sp create-for-rbac --name "jenkins-{suffix}" --role Contributor --scopes /
 
 6. In the Azure portal, navigate to your terraform-state container and verify the existence of your state file “terraform.tfstate”..
 
-7. Still in the portal, verify the existence of the new resource group “rg-{suffix}-test-1” as configured in main.tf
+7. Still in the portal, verify the existence of the new resource group `rg-{suffix}-test-1` as configured in main.tf
 
 ## Task 8. Updating the Jenkins pipeline
 
@@ -297,9 +297,9 @@ In this task we will simplify the process; you will modify the terraform files d
 
 1. Return to your Github repository, logging back in if necessary.
 
-2. Open main.tf for editing
+2. Open `main.tf` for editing
 
-3. Change the name of the resource group to be created to “rg-{suffix}-test-2” and commit this change.
+3. Change the name of the resource group to be created to `rg-{suffix}-test-2` and commit this change.
 
 4. Switch to Jenkins and click on the play icon to schedule a manual running of the pipeline..
 
@@ -315,7 +315,7 @@ In this task we will simplify the process; you will modify the terraform files d
 
 10. Scroll down to the Build Triggers section, select `Github hook trigger for GITScm polling` and click on `Save` …
 
-11. Switch to Github. Select the Settings for your repo. Scroll down and select `Webhooks`. Click on `Add webhook` (you may be prompted to re-authenticate at this point)…
+11. Switch to Github. Select the Settings for your repo. Scroll down and select `Webhooks`. Click on `Add webhook`
 
 12. For Payload URL;  enter `http://{IP}:8080/github-webhook/` replacing {IP} with the Public IP address of your Jenkins instance
 
@@ -327,7 +327,7 @@ In this task we will simplify the process; you will modify the terraform files d
 
 16. In `main.tf` change to the name of your resource group to `rg-{suffix}-test-3` and commit the changes as before.
 
-17. Re-visit your Webhooks setting and you should see confirmation that there was a successful push of the changes to Jenkins…
+17. Re-visit your Webhooks setting and you should see confirmation that there was a successful push of the changes to Jenkins.
 
 18. Switch to Jenkins. Return to the Dashboard and check that there is now a record of a third successful running of the pipeline (it may still be running so refresh the page periodically)…
 
@@ -361,13 +361,13 @@ In this task we will simplify the process; you will modify the terraform files d
 
 Note: Entering destroy/ will create the destroy folder
 
-13. Using explorer in your IDE, open Jenkinsfile in the c:\azurelabs\lab6\destroy folder and copy the contents into your new github file. (Ensure you select the destroy folder version!)
+13. Using explorer in your IDE, open Jenkinsfile in the `c:\azurelabs\lab6\destroy` folder and copy the contents into your new github file. (Ensure you select the destroy folder version!)
 
 14. Update line 13 with your repo URL and then commit the changes.
 
 15. Switch back to Jenkins and Build the pipeline.
 
-16. This Jenkinsfile mandates that approval must be granted for the deletion to proceed.  Click on the pipeline, and under `Builds`, select the running Terraform Pipeline Destroy job and then select Console Output..
+16. This Jenkinsfile mandates that approval must be granted for the deletion to proceed.  Click on the pipeline, and under `Builds`, select the running Terraform Pipeline Destroy job and then select `Console Output`..
 
 17. The run is waiting for approval to continue. Click on `Yes` to confirm the deletion ..
 
