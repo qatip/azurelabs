@@ -1,6 +1,10 @@
-# QATIPv3 – Azure Lab5a
+# QATIP – Azure Lab5a
 
 ## Migrating a local Statefile to an Azure Storage Account
+
+Last reviewed and tested - 19/11/26 05:23 - mcgreen@qa.com
+
+PDF version deprecated and removed due to copy/paste issues.
 
 ## Contents
 
@@ -11,7 +15,7 @@
 - [Task1: Create a Storage Account for Remote State](#task1-create-a-storage-account-for-remote-state)
 - [Task2: Review the Local Terraform State](#task2-review-the-local-terraform-state)
 - [Task3: Update the Terraform Configuration](#task3-update-the-terraform-configuration)
-- [Copyright](#copyright)
+
 
 ## Lab Objectives
 
@@ -37,15 +41,15 @@ cd c:\azurelabs\lab5
 
 3. This shifts your current working directory to lab5. Ensure all commands are executed in this directory
 
-4. Close any open files and use the Explorer pane to navigate to and open the lab5 folder.
+4. Close any open files (except this one) and use the Explorer pane to navigate to and open the lab5 folder.
 
-5. Update main.tf with your lab subscription id and save the change.
+5. Update `main.tf` with your lab `subscription id` and save the change if necessary.
 
-6. Update network_module\main.tf with your resource group suffix.
+6. Update `network_module\main.tf` with your resource group suffix.
 
-7. Run terraform init and then terraform plan commands
+7. From the root module, run `terraform init` and then `terraform plan`
 
-8. Verify there are no errors and then run terraform apply followed by yes
+8. Verify there are no errors and then run `terraform apply` followed by `yes`
 
 9. Switch the console to review the deployment
 
@@ -86,11 +90,11 @@ In this task you will create an Azure storage account and blob container for use
 
 1. Wait until your deployment has completed..
 
-2. Review the newly created terraform.tfstate file in the lab5 folder… Unless otherwise specified, the state file for your deployments will the in the local root directory. In all but trivial deployments the state file will be stored in a remote, shared location. You will move yours to the storage account you created in Task 1.
+2. Review the newly created `terraform.tfstate` file in the lab5 folder… Unless otherwise specified, the state file for your deployments will the in the local root directory. In all but trivial deployments the state file will be stored in a remote, shared location. You will move yours to the storage account you created in Task 1.
 
 ## Task3: Update the Terraform Configuration
 
-1. Open main.tf in the root directory and add the following backend code to the end of the file, updating with your suffix
+1. Open `main.tf` in the root directory and add the following backend code to the end of the file, updating with your suffix
 
 ```hcl
 terraform {
@@ -103,11 +107,11 @@ terraform {
 }
 ```
 
-2. Run the following command to migrate the state: terraform init
+2. Run the following command to migrate the state: `terraform init`
 
-3. During the initialization, Terraform will prompt to confirm the migration of the local state to Azure. Type yes when prompted.
+3. During the initialization, Terraform will prompt to confirm the migration of the local state to Azure. Type `yes` when prompted.
 
-4. Confirm that the state has been migrated by checking the blob container for the terraform.tfstate file. Make a note of its size. In Lab5b you will deploy additional resources, and this will be reflected by a growth in the state file size. Also notice that your local state file is now empty.
+4. Confirm that the state has been migrated by checking the blob container for the `terraform.tfstate` file. Make a note of its size. In Lab5b you will deploy additional resources, and this will be reflected by a growth in the state file size. Also notice that your local state file is now empty.
 
 5. Do not delete any resources as they will be used in the next lab
 

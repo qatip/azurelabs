@@ -11,7 +11,7 @@ resource "azurerm_windows_virtual_machine" "VM" {
   name                = each.value 
   resource_group_name = module.networking.rg_name
   location            = module.networking.rg_location
-  size                = "Standard_B2s"
+  size                = "Standard_B2s_v2"
   admin_username      = "azureadmin"
   admin_password      = random_password.password.result
   vm_agent_platform_updates_enabled = "true"
