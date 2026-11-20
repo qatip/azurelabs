@@ -2,7 +2,7 @@
 
 ## Terraform Pipelining with Jenkins
 
-Last reviewed and tested - 19/11/26 11:45 - mcgreen@qa.com
+Last reviewed and tested - 20/11/26 05:23 - mcgreen@qa.com
 
 PDF version deprecated and removed due to copy/paste issues.
 
@@ -232,7 +232,7 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 az ad sp create-for-rbac --name "jenkins-{suffix}" --role Contributor --scopes /subscriptions/<subscription_id>
 ```
 
-5. Details of the service principle will be displayed.
+5. Details of the service principal will be displayed.
 
 6. In your Jenkins browser session; Navigate to `Manage Jenkins` > `Credentials`.
 
@@ -351,13 +351,13 @@ In this task we will simplify the process; you will modify the terraform files d
 
 8. In “Branches to build,” “Branch Specifier;” change from */master to */main
 
-9. For Script path, enter `destroy/jenkinsfile` …
+9. For Script path, enter `destroy/jenkinsfile`
 
 10. Save the new pipeline but do not build it yet
 
 11. Switch to your Github account
 
-12. Create a new empty Jenkinsfile in a new folder “destroy”…
+12. Create a new empty `Jenkinsfile` in a new folder named `destroy`
 
 Note: Entering destroy/ will create the destroy folder
 
@@ -367,15 +367,17 @@ Note: Entering destroy/ will create the destroy folder
 
 15. Switch back to Jenkins and Build the pipeline.
 
-16. This Jenkinsfile mandates that approval must be granted for the deletion to proceed.  Click on the pipeline, and under `Builds`, select the running Terraform Pipeline Destroy job and then select `Console Output`..
+16. This Jenkinsfile mandates that approval must be granted for the deletion to proceed.  Click on the pipeline, and under `Builds`, select the running Terraform Pipeline Destroy job and then select `Console Output`
 
-17. The run is waiting for approval to continue. Click on `Yes` to confirm the deletion ..
+17. The run is waiting for approval to continue. Click on `Yes` to confirm the deletion 
 
 18. The destruction should now proceed. Switch to the Azure portal to verify the deletion of your resource group.
 
 ## Task 10. Lab cleanup
 
 1. In the Azure Portal, manually delete resource groups `jenkins-sa-{suffix}` and `jenkins-{suffix}` as these were not created by terraform.
+
+2. If you did not complete Task 9 then also manually delete `rg-{suffix}-test-3`
 
 **Congratulations, you have completed the final lab of the course.**
 
